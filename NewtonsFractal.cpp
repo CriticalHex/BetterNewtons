@@ -17,26 +17,55 @@ public:
 	}
 	~Pixel() {}
 	void iterate(sf::Image& image) {
-		checkRoots();
+		//checkRoots();
+		color = sf::Color(count * 6, count * 8, count * 12);
 		image.setPixel(position[0], position[1], color);
-		c = newtonsMethod();
+		if (!found) {
+			c = newtonsMethod();
+			count++;
+			if (c == root1 || c == root2 || c == root3 || c == root4 || c == root5 || c == root6 || c == root7 || c == root8) {
+				found = true;
+			}
+		}
 	}
 	complex<double> c;
 private:
+	bool found = false;
+	int count = 0;
 	int position[2];
-	sf::Color color;
+	sf::Color color = sf::Color(255,255,255);
+
+	/*complex<double> root1 = (1, 0);
+	complex<double> root2 = (-1, 0);
+	complex<double> root3 = (1, 1);
+	complex<double> root4 = (1, -1);
+	complex<double> root5 = (0, 1);
+	complex<double> root6 = (0, -1);
+	complex<double> root7 = (-1, 1);
+	complex<double> root8 = (-1, -1);*/
+
+	complex<double> root1 = (1, 0);
+	complex<double> root2 = (-1, 0);
+	complex<double> root3 = (1.41421356237, 1.41421356237);
+	complex<double> root4 = (-1.41421356237, -1.41421356237);
+	complex<double> root5 = (0, 1);
+	complex<double> root6 = (0, -1);
+	complex<double> root7 = (-1.41421356237, 1.41421356237);
+	complex<double> root8 = (1.41421356237, -1.41421356237);
 
 	complex<double> newtonsMethod() {
 		return (c - (f(c) / df(c)));
 	}
 
 	complex<double> f(complex<double> x) {
-		return pow(x, 8) + (real(3) * pow(x, 4)) - real(4);
+		return (pow(x, 8) + (real(15) * pow(x, 4)) - real(16));
+		//return pow(x, 8) + (real(3) * pow(x, 4)) - real(4);
 		//return pow(x, 3) - real(1);
 	}
 
 	complex<double> df(complex<double> x) {
-		return (real(8) * pow(x, 7)) + (real(12) * pow(x, 2));
+		return ((real(8) * pow(x, 7)) + (real(60) * pow(x, 3)));
+		//return (real(8) * pow(x, 7)) + (real(12) * pow(x, 2));
 		//return real(3) * pow(x, 2);
 	}
 
@@ -87,31 +116,31 @@ private:
 
 		color = sf::Color(c.imag() * 6, c.imag() * 8, c.imag() * 12);
 
-//for 8 point function
-if (distanceToP1 == min({ distanceToP1, distanceToP2, distanceToP3, distanceToP4, distanceToP5, distanceToP6, distanceToP7, distanceToP8 })) {
-	color = sf::Color::Blue;
-}
-else if (distanceToP2 == min({ distanceToP1, distanceToP2, distanceToP3, distanceToP4, distanceToP5, distanceToP6, distanceToP7, distanceToP8 })) {
-	color = sf::Color::Cyan;
-}
-else if (distanceToP3 == min({ distanceToP1, distanceToP2, distanceToP3, distanceToP4, distanceToP5, distanceToP6, distanceToP7, distanceToP8 })) {
-	color = sf::Color::Green;
-}
-else if (distanceToP4 == min({ distanceToP1, distanceToP2, distanceToP3, distanceToP4, distanceToP5, distanceToP6, distanceToP7, distanceToP8 })) {
-	color = sf::Color::Magenta;
-}
-else if (distanceToP5 == min({ distanceToP1, distanceToP2, distanceToP3, distanceToP4, distanceToP5, distanceToP6, distanceToP7, distanceToP8 })) {
-	color = sf::Color::Red;
-}
-else if (distanceToP6 == min({ distanceToP1, distanceToP2, distanceToP3, distanceToP4, distanceToP5, distanceToP6, distanceToP7, distanceToP8 })) {
-	color = sf::Color::Yellow;
-}
-else if (distanceToP7 == min({ distanceToP1, distanceToP2, distanceToP3, distanceToP4, distanceToP5, distanceToP6, distanceToP7, distanceToP8 })) {
-	color = sf::Color(89, 130, 52);
-}
-else if (distanceToP8 == min({ distanceToP1, distanceToP2, distanceToP3, distanceToP4, distanceToP5, distanceToP6, distanceToP7, distanceToP8 })) {
-	color = sf::Color(173, 189, 56);
-}
+		//for 8 point function
+		if (distanceToP1 == min({ distanceToP1, distanceToP2, distanceToP3, distanceToP4, distanceToP5, distanceToP6, distanceToP7, distanceToP8 })) {
+			color = sf::Color::Blue;
+		}
+		else if (distanceToP2 == min({ distanceToP1, distanceToP2, distanceToP3, distanceToP4, distanceToP5, distanceToP6, distanceToP7, distanceToP8 })) {
+			color = sf::Color::Cyan;
+		}
+		else if (distanceToP3 == min({ distanceToP1, distanceToP2, distanceToP3, distanceToP4, distanceToP5, distanceToP6, distanceToP7, distanceToP8 })) {
+			color = sf::Color::Green;
+		}
+		else if (distanceToP4 == min({ distanceToP1, distanceToP2, distanceToP3, distanceToP4, distanceToP5, distanceToP6, distanceToP7, distanceToP8 })) {
+			color = sf::Color::Magenta;
+		}
+		else if (distanceToP5 == min({ distanceToP1, distanceToP2, distanceToP3, distanceToP4, distanceToP5, distanceToP6, distanceToP7, distanceToP8 })) {
+			color = sf::Color::Red;
+		}
+		else if (distanceToP6 == min({ distanceToP1, distanceToP2, distanceToP3, distanceToP4, distanceToP5, distanceToP6, distanceToP7, distanceToP8 })) {
+			color = sf::Color::Yellow;
+		}
+		else if (distanceToP7 == min({ distanceToP1, distanceToP2, distanceToP3, distanceToP4, distanceToP5, distanceToP6, distanceToP7, distanceToP8 })) {
+			color = sf::Color(89, 130, 52);
+		}
+		else if (distanceToP8 == min({ distanceToP1, distanceToP2, distanceToP3, distanceToP4, distanceToP5, distanceToP6, distanceToP7, distanceToP8 })) {
+			color = sf::Color(173, 189, 56);
+		}
 	}
 
 	double distance(complex<double> pos1, complex<double> pos2) {
@@ -222,7 +251,7 @@ int main() {
 
 	sf::Event event;
 	vector<thread> active_threads;
-	int max_threads = 12;
+	int max_threads = 16;
 	sf::Image image;
 	image.create(window.getSize().x, window.getSize().y, bgColor);
 	sf::Texture texture; 
