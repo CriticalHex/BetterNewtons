@@ -1,7 +1,9 @@
 TARGET = NewtonsFractal.exe
-SRC_FILES = main.cpp pixel.cpp
+SRC_DIR = src
+OUT_DIR = out
 
-OBJECTS = $(SRC_FILES:.cpp=.o)
+SRC_FILES = main.cpp pixel.cpp
+OBJECTS = $(addprefix $(OUT_DIR)/, $(SRC_FILES:.cpp=.o))
 
 INCLUDE_PATH = -I"C:\mingw64\include"
 
@@ -15,16 +17,16 @@ all: $(TARGET)
 $(TARGET): $(OBJECTS)
 	@$(CXX) -o $@ $^ $(LIB_PATH) $(LIBS)
 
-%.o: %.cpp
+$(OUT_DIR)/%.o: $(SRC_DIR)/%.cpp | $(OUT_DIR)
 	@$(CXX) -c $< -o $@ $(INCLUDE_PATH)
+
+$(OUT_DIR):
+	@mkdir -p $(OUT_DIR)
 
 clean:
 	@$(RM) $(OBJECTS) $(TARGET)
 
 run:
-	@$(TARGET)
+	@./$(TARGET)
 
 .PHONY: clean run
-
-main.o: main.cpp pixel.o
-pixel.o: pixel.cpp
